@@ -15,3 +15,8 @@ This might work in Ubuntu for now due the presence of that wayland xorg compatib
 TODO: figure out the active window from where the shortcut command is issued from.
 
 TODO: tie two above two components (the configurator and the active window identifier) with a driver interface (shortcut keys)
+
+
+# xbindkeys method
+Lets simply install this application and setup config to create my menu driven program
+.xbindkeysrc
