@@ -3,51 +3,112 @@
 
 # Set strict mode
 set -euo pipefail
-# IFS=$'\n\t'
+IFS=$'\n\t'
 
 
-# Util
-# function getTargetWindowId() {
-#   # Check if the session is Wayland
-#   if [[ "$XDG_SESSION_TYPE" == 'wayland' ]]; then
-#     # Use the 'swaymsg' command to get the focused window ID in a sway (Wayland) session
-#     focused_window_id=$(swaymsg -t get_tree | jq -r '.. | select(.focused?).id')
-#     echo "Focused Window ID in Wayland: $focused_window_id"
-#   elif [[ "$XDG_SESSION_TYPE" == 'x11' ]]; then
-#     # Use the 'xdotool' command to get the focused window ID in an X11 session
-#     focused_window_id=$(xdotool getwindowfocus)
-#     echo "Focused Window ID in X11: $focused_window_id"
-#   else
-#     echo "Unsupported session type: $XDG_SESSION_TYPE"
-#   fi
+
+
+
+
+
+# # Function to display usage information
+# function showUsage() {
+#   echo "Usage: $0 [--stepup | --stepdown | --reset]"
 # }
-function getWaylandTargetWindowId() {
-  # Use the 'swaymsg' command to get the focused window ID in a sway (Wayland) session
-  focused_window_id=$(swaymsg -t get_tree | jq -r '.. | select(.focused?).id')
-  echo "Focused Window ID in Wayland: $focused_window_id"
-	# return focused_window_id
-}
-function getX11TargetWindowId() {
-	# Use the 'xdotool' command to get the focused window ID in an X11 session
-	focused_window_id=$(xdotool getwindowfocus)
-  echo "Focused Window ID in X11: $focused_window_id"
-	# return focused_window_id
-}
+
+# # Initialize variables with default values
+# stepUp=false
+# stepDown=false
+# reset=false
+# flagProvided=false
+
+# # Parse command-line options
+# while getopts ":h-:" opt; do
+#   case $opt in
+#     -)
+#       case "${OPTARG}" in
+#         stepup)
+#           stepUp=true
+#           flagProvided=true
+#           ;;
+#         stepdown)
+#           stepDown=true
+#           flagProvided=true
+#           ;;
+#         reset)
+#           reset=true
+#           flagProvided=true
+#           ;;
+#         *)
+#           echo "Invalid option: --$OPTARG"
+#           showUsage
+#           exit 1
+#           ;;
+#       esac
+#       ;;
+#     h)
+#       showUsage
+#       exit 0
+#       ;;
+#     *)
+#       echo "Invalid option: -$opt"
+#       showUsage
+#       exit 1
+#       ;;
+#   esac
+# done
+
+# # Check if a flag is provided
+# if [ "$flagProvided" == false ]; then
+#   echo "Error: Please provide a flag."
+#   showUsage
+#   exit 1
+# fi
+
+# # Validate that only one flag is provided
+# if [[ "$stepUp" == true && ("$stepDown" == true || "$reset" == true) ]] || \
+#    [[ "$stepDown" == true && ("$stepUp" == true || "$reset" == true) ]] || \
+#    [[ "$reset" == true && ("$stepUp" == true || "$stepDown" == true) ]]; then
+#   echo "Error: Only one flag at a time is allowed."
+#   showUsage
+#   exit 1
+# fi
+
+# # Perform actions based on the provided flag
+# if [ "$stepUp" == true ]; then
+#   echo "Performing step up..."
+# elif [ "$stepDown" == true ]; then
+#   echo "Performing step down..."
+# elif [ "$reset" == true ]; then
+#   echo "Performing reset..."
+# fi
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Session specific handlers
 function x11Handler() {
-  # echo "session is x11"
-  getX11TargetWindowId
-  # targetWindowId = $(getX11TargetWindowId)
-  # echo "$targetWindowId"
-  
+  # Use the 'xdotool' command to get the focused window ID in an X11 session
+	focused_window_id=$(xdotool getwindowfocus)
+
+
 }
 function waylandHandler() {
-  # echo "session is wayland"
-  getWaylandTargetWindowId
-  # targetWindowId = $(getWaylandTargetWindowId)
-  # echo "$targetWindowId"
+  # Use the 'swaymsg' command to get the focused window ID in a sway (Wayland) session
+  focused_window_id=$(swaymsg -t get_tree | jq -r '.. | select(.focused?).id')
+
+  # TODO: Perform the compositor config alteration
 }
 
 
