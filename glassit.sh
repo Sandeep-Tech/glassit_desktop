@@ -21,30 +21,33 @@ set -euo pipefail
 #     echo "Unsupported session type: $XDG_SESSION_TYPE"
 #   fi
 # }
-function getX11TargetWindowId() {
+function getWaylandTargetWindowId() {
   # Use the 'swaymsg' command to get the focused window ID in a sway (Wayland) session
   focused_window_id=$(swaymsg -t get_tree | jq -r '.. | select(.focused?).id')
-  # echo "Focused Window ID in Wayland: $focused_window_id"
-	return focused_window_id
+  echo "Focused Window ID in Wayland: $focused_window_id"
+	# return focused_window_id
 }
-function getWaylandTargetWindowId() {
+function getX11TargetWindowId() {
 	# Use the 'xdotool' command to get the focused window ID in an X11 session
 	focused_window_id=$(xdotool getwindowfocus)
-	return focused_window_id
+  echo "Focused Window ID in X11: $focused_window_id"
+	# return focused_window_id
 }
 
 
 # Session specific handlers
 function x11Handler() {
   # echo "session is x11"
-  targetWindowId = $(getX11TargetWindowId)
-  echo "$targetWindowId"
+  getX11TargetWindowId
+  # targetWindowId = $(getX11TargetWindowId)
+  # echo "$targetWindowId"
   
 }
-function waylandhandler() {
+function waylandHandler() {
   # echo "session is wayland"
-  targetWindowId = $(getWaylandTargetWindowId)
-  echo "$targetWindowId"
+  getWaylandTargetWindowId
+  # targetWindowId = $(getWaylandTargetWindowId)
+  # echo "$targetWindowId"
 }
 
 
@@ -52,7 +55,7 @@ function waylandhandler() {
 if ( shopt -s nocasematch; [[ "$XDG_SESSION_TYPE" == 'x11' ]] ); then
 	x11Handler
 elif [[ "$XDG_SESSION_TYPE" == 'wayland' ]]; then
-	waylandhandler
+	waylandHandler
 fi
 
 
