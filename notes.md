@@ -19,4 +19,16 @@ TODO: tie two above two components (the configurator and the active window ident
 
 # xbindkeys method
 Lets simply install this application and setup config to create my menu driven program
-.xbindkeysrc
+.xbindkeysrc - the config file to bind shortcuts with commands
+
+## reference .xbindkeyssrc
+```
+"python ~/glassit.py stepdown"
+control + alt + z
+
+"python ~/glassit.py reset"
+control + alt + x
+
+"python ~/glassit.py stepup"
+control + alt + c
+```
